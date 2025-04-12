@@ -1,0 +1,12 @@
+workflows:
+  ios-workflow:
+    name: iOS App Build
+    environment:
+      xcode: latest
+    scripts:
+      - name: Build .ipa
+        script: |
+          xcodebuild -workspace MacsonaldsApp.xcworkspace -scheme MacsonaldsApp -sdk iphoneos -configuration Release archive -archivePath $CM_BUILD_DIR/MacsonaldsApp.xcarchive
+          xcodebuild -exportArchive -archivePath $CM_BUILD_DIR/MacsonaldsApp.xcarchive -exportOptionsPlist ExportOptions.plist -exportPath $CM_BUILD_DIR
+    artifacts:
+      - $CM_BUILD_DIR/*.ipa
